@@ -17,14 +17,14 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /*
- * 1. ±×¸²ÆÛÁñ¿¡ µé¾î°¥ ±×¸² ¼±ÅÃ
- * 2. ½ÃÀÛÇÒ ‹š ³­ÀÌµµ¸¦ ÀÔ·Â¹Ş¾Æ¼­ ¹öÆ° ¼ö¸¦ ´Ù¸£°Ô ¼³Á¤ (selectLevel.java ÀÌ¿ë)(¿Ï·á)
- * 3. ½Ã°£ or Ä«¿îÆ®·Î Á¡¼ö »êÃâ (¿Ï·á)
- * 4. ¹öÆ°À» ¸¸µé¾î¼­ ¿øº» ±×¸²À» º¼ ¼ö ÀÖµµ·Ï ¼³Á¤ (image.java ÀÌ¿ë)
- * 5. ÇÁ·Î±×·¥ Á¾·á½Ã ½Ã½ºÅÛ Á¾·á°¡ µÉ ¼ö ÀÖµµ·Ï ¼³Á¤ (exit(0) »ç¿ë)
+ * 1. ê·¸ë¦¼í¼ì¦ì— ë“¤ì–´ê°ˆ ê·¸ë¦¼ ì„ íƒ
+ * 2. ì‹œì‘í•  ë–„ ë‚œì´ë„ë¥¼ ì…ë ¥ë°›ì•„ì„œ ë²„íŠ¼ ìˆ˜ë¥¼ ë‹¤ë¥´ê²Œ ì„¤ì • (selectLevel.java ì´ìš©)(ì™„ë£Œ)
+ * 3. ì‹œê°„ and ì¹´ìš´íŠ¸ ê³„ì‚° (ì™„ë£Œ)
+ * 4. ë²„íŠ¼ì„ ë§Œë“¤ì–´ì„œ ì›ë³¸ ê·¸ë¦¼ì„ ë³¼ ìˆ˜ ìˆë„ë¡ ì„¤ì • (image.java ì´ìš©)
+ * 5. í”„ë¡œê·¸ë¨ ì¢…ë£Œì‹œ ì‹œìŠ¤í…œ ì¢…ë£Œê°€ ë  ìˆ˜ ìˆë„ë¡ ì„¤ì • (exit(0) ì‚¬ìš©)
  */
 
-//¹öÆ°À» ÀÌ¿ëÇÑ ±×¸²ÆÛÁñ
+//ë²„íŠ¼ì„ ì´ìš©í•œ ê·¸ë¦¼í¼ì¦
 public class ImagePuzzle extends JFrame implements ActionListener {
 	
 	JButton []btn;
@@ -38,11 +38,11 @@ public class ImagePuzzle extends JFrame implements ActionListener {
 		this.size = size;
 	}
 
-	//¿øº» ±×¸² ÀĞ±â
+	//ì›ë³¸ ê·¸ë¦¼ ì½ê¸°
 	public void Puzzle() {
 		
 		MediaTracker tracker = new MediaTracker(this);
-		original = Toolkit.getDefaultToolkit().getImage("C:\\Users\\kang7\\OneDrive\\¹ÙÅÁ È­¸é\\2018ÇĞ³âµµ ¼ö°­ °ú¸ñ\\2ÇĞ±â\\ÇÁ·Î±×·¥¼³°è¹æ¹ı·Ğ\\ÇÁ·Î±×·¥ ¼³°è ¹æ¹ı·Ğ\\src\\TeamPL\\Github.png");
+		original = Toolkit.getDefaultToolkit().getImage("C:\\Users\\kang7\\OneDrive\\ë°”íƒ• í™”ë©´\\2018í•™ë…„ë„ ìˆ˜ê°• ê³¼ëª©\\2í•™ê¸°\\í”„ë¡œê·¸ë¨ì„¤ê³„ë°©ë²•ë¡ \\í”„ë¡œê·¸ë¨ ì„¤ê³„ ë°©ë²•ë¡ \\src\\TeamPL\\Github.png");
 		tracker.addImage(original, 0);
 		
 		try {
@@ -53,23 +53,23 @@ public class ImagePuzzle extends JFrame implements ActionListener {
 		int height = original.getHeight(this)/size;
 		setSize(new Dimension(width*size,height*size));
 		
-		//ÀÌ¹ÌÁö¸¦ Àß¶ó ³ÖÀÚ
+		//ì´ë¯¸ì§€ë¥¼ ì˜ë¼ ë„£ì
 		img = new BufferedImage[size*size];
 		int cnt=0;
 		for(int i=0;i<size;i++) {
 			for(int j=0;j<size;j++) {
 				img[cnt] = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 				Graphics g = img[cnt].getGraphics();
-				//¿øº»ÀÌ¹ÌÁö¿¡¼­ ÇÊ¿äÇÑ ºÎºĞ¸¸ Àß¶ó¼­ ±×¸®±â
+				//ì›ë³¸ì´ë¯¸ì§€ì—ì„œ í•„ìš”í•œ ë¶€ë¶„ë§Œ ì˜ë¼ì„œ ê·¸ë¦¬ê¸°
 				g.drawImage(original, 0, 0, width, height, j*width, i*height, (j+1)*width, (i+1)*height, this);
 				cnt++;
 			}
 		}
 		
-		//°ÔÀÓ¹è¿­
+		//ê²Œì„ë°°ì—´
 		game = new int[size*size];
 		
-		//¹öÆ°À» ¸¸µé±â
+		//ë²„íŠ¼ì„ ë§Œë“¤ê¸°
 		btn = new JButton[size*size];
 		
 		for(int i=0;i<size*size;i++) {
@@ -78,17 +78,17 @@ public class ImagePuzzle extends JFrame implements ActionListener {
 			add(btn[i]);
 		}
 		
-		//¼ıÀÚ ¼¯°í ¹öÆ°¿¡ ÀÌ¹ÌÁö ÀÔÈ÷±â
+		//ìˆ«ì ì„ê³  ë²„íŠ¼ì— ì´ë¯¸ì§€ ì…íˆê¸°
 		shuffle();
 		setLayout(new GridLayout(size, size));
 		
 		setResizable(false);
 		setVisible(true);
 		
-		start = System.currentTimeMillis(); //½ÃÀÛ ½Ã°£ ÃøÁ¤
+		start = System.currentTimeMillis(); //ì‹œì‘ ì‹œê°„ ì¸¡ì •
 	}
 	
-	//¼ıÀÚ ¼¯°í ¹öÆ°¿¡ ÀÌ¹ÌÁö ÀÔÈ÷±â
+	//ìˆ«ì ì„ê³  ë²„íŠ¼ì— ì´ë¯¸ì§€ ì…íˆê¸°
 	private void shuffle() {
 		Random rnd = new Random();
 		
@@ -96,7 +96,7 @@ public class ImagePuzzle extends JFrame implements ActionListener {
 			for(int i=0; i<size*size; i++) 
 				game[i]=0;
 			
-			//¹è¿­ÀÇ Áßº¹°ª ¾øÀÌ ³Ö±â
+			//ë°°ì—´ì˜ ì¤‘ë³µê°’ ì—†ì´ ë„£ê¸°
 			for(int i=0; i<size*size; i++) {
 				int temp=0;
 				do {
@@ -104,9 +104,9 @@ public class ImagePuzzle extends JFrame implements ActionListener {
 				}while(game[temp] != 0);
 				game[temp] = i;
 			}
-		}while(endGame()); //¼¯ÀÌÁö ¾Ê¾ÒÀ» ¶§ ´Ù½Ã ¼¯¾î¶ó!!
+		}while(endGame()); //ì„ì´ì§€ ì•Šì•˜ì„ ë•Œ ë‹¤ì‹œ ì„ì–´ë¼!!
 		
-		//¹è¿­°ªÀ¸·Î ÀÌ¹ÌÁö¸¦ ¼±ÅÃÇØ¼­ ¹öÆ°¿¡ ºÎ¿©
+		//ë°°ì—´ê°’ìœ¼ë¡œ ì´ë¯¸ì§€ë¥¼ ì„ íƒí•´ì„œ ë²„íŠ¼ì— ë¶€ì—¬
 		for(int i=0; i<size*size; i++) {
 			btn[i].setIcon(new ImageIcon(img[game[i]]));
 		}
@@ -123,36 +123,38 @@ public class ImagePuzzle extends JFrame implements ActionListener {
 			}
 		}
 		
-		//Ã¹¹øÂ° Å¬¸¯ÀÌ¸é
+		//ì²«ë²ˆì§¸ í´ë¦­ì´ë©´
 		if(clickCount==0) {
+			count++;
 			clickCount++;
 			oldNum = curNum;
 		} else {
 			
-			//µÎ¹øÂ° Å¬¸¯ÀÌ¸é
-			if(oldNum != curNum) { //ÀÌÀü °Í°ú °°Áö ¾Ê´Ù¸é
+			//ë‘ë²ˆì§¸ í´ë¦­ì´ë©´
+			if(oldNum != curNum) { //ì´ì „ ê²ƒê³¼ ê°™ì§€ ì•Šë‹¤ë©´
+				count++;
 				
-				//ÀÌ¹ÌÁö º¯°æ
+				//ì´ë¯¸ì§€ ë³€ê²½
 				btn[oldNum].setIcon(new ImageIcon(img[game[curNum]]));
 				btn[curNum].setIcon(new ImageIcon(img[game[oldNum]]));
 				
-				//¹è¿­°ª º¯°æ
+				//ë°°ì—´ê°’ ë³€ê²½
 				int t = game[oldNum];
 				game[oldNum] = game[curNum];
 				game[curNum] = t;
 				
-				//¿©±â¼­ °ÔÀÓ Á¾·á È®ÀÎ
+				//ì—¬ê¸°ì„œ ê²Œì„ ì¢…ë£Œ í™•ì¸
 				if(endGame()) {
-					end = System.currentTimeMillis(); //Á¾·á ½Ã°£ ÃøÁ¤
+					end = System.currentTimeMillis(); //ì¢…ë£Œ ì‹œê°„ ì¸¡ì •
 					time = (end - start)/(long)1000.0;
-					JOptionPane.showMessageDialog(this, "ÆÛÁñ ¿Ï¼º±îÁö "+ (end-start)/(long)1000+ "ÃÊ ¼Ò¿ä!");
+					JOptionPane.showMessageDialog(this, "í¼ì¦ ì™„ì„±ê¹Œì§€ "+ (count/2) + "íšŒ ì´ë™, " + (end-start)/(long)1000+ "ì´ˆ ì†Œìš”!");
 					
-					//°ÔÀÓ Àç½ÃÀÛÀ» È®ÀÎ
-					int reStart = JOptionPane.showConfirmDialog(this, "ÇÑ ¹ø ´õ?", "ÇÁ·Î±×·¥ Á¾·á?", JOptionPane.YES_NO_OPTION);
+					//ê²Œì„ ì¬ì‹œì‘ì„ í™•ì¸
+					int reStart = JOptionPane.showConfirmDialog(this, "í•œ ë²ˆ ë”?", "í”„ë¡œê·¸ë¨ ì¢…ë£Œ?", JOptionPane.YES_NO_OPTION);
 					if(reStart == JOptionPane.YES_OPTION) {
-						shuffle(); //¹è¿­ ´Ù½Ã ¼¯±â
-						repaint(); //´Ù½Ã ±×¸®±â
-						start = System.currentTimeMillis(); //½ÃÀÛ ½Ã°£ ÃøÁ¤
+						shuffle(); //ë°°ì—´ ë‹¤ì‹œ ì„ê¸°
+						repaint(); //ë‹¤ì‹œ ê·¸ë¦¬ê¸°
+						start = System.currentTimeMillis(); //ì‹œì‘ ì‹œê°„ ì¸¡ì •
 						System.out.println(start);
 					}else {
 						System.exit(0);
@@ -163,7 +165,7 @@ public class ImagePuzzle extends JFrame implements ActionListener {
 		}
 	}
 	
-	//°ÔÀÓ Á¾·á¸¦ È®ÀÎÇÏ´Â ¸Ş¼Òµå
+	//ê²Œì„ ì¢…ë£Œë¥¼ í™•ì¸í•˜ëŠ” ë©”ì†Œë“œ
 	private boolean endGame() {
 		boolean endGame = true;
 		
